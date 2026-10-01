@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main() {
+    int i, ic = 0, cc = 0, oc = 0, j, m;
+    char b[100], operators[100], identifiers[100];
+    int constants[100];
+
+    printf("enter the string : ");
+    scanf("%99[^\n]", b);
+
+    for (i = 0; i < (int)strlen(b); i++) {
+        if (isspace((unsigned char)b[i])) {
+            continue;
+        }
+        else if (isalpha((unsigned char)b[i])) {
+            identifiers[ic++] = b[i];
+        }
+        else if (isdigit((unsigned char)b[i])) {
+            m = b[i] - '0';
+            while (isdigit((unsigned char)b[i + 1])) {
+                i++;
+                m = m * 10 + (b[i] - '0');
+            }
+            constants[cc++] = m;
+        }
+        else if (strchr("+-*/=", b[i])) {
+            operators[oc++] = b[i];
+        }
+    }
+
+    printf("identifiers : ");
+    for (j = 0; j < ic; j++) printf("%c ", identifiers[j]);
+
+    printf("\nconstants   : ");
+    for (j = 0; j < cc; j++) printf("%d ", constants[j]);
+
+    printf("\noperators   : ");
+    for (j = 0; j < oc; j++) printf("%c ", operators[j]);
+
+    printf("\n");
+    return 0;
+}
